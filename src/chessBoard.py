@@ -2,10 +2,10 @@ import time
 from math import inf as infinity
 import random
 weight = [[1, 1, 3, 1, 1],
-        [1, 7, 4, 7, 1],
-        [3, 4, 8, 4, 3],
-        [1, 7, 4, 7, 1],
-        [1, 1, 3, 1, 1]]
+		[1, 7, 4, 7, 1],
+		[3, 4, 8, 4, 3],
+		[1, 7, 4, 7, 1],
+		[1, 1, 3, 1, 1]]
 
 class Board:
 	def __init__(self, board):
@@ -194,11 +194,11 @@ def move(prev_board, board, player, remain_time_x, remain_time_o):
 	
 testboard1 = Board([
 				[ 1,  0, -1,  0, -1],
- 				[ 0,  1,  0,  0, -1],
- 				[-1, -1,  1,  0,  0],
- 				[ 1,  1, -1, -1, -1],
- 				[ 1,  0,  0,  1,  1]
- 			  ])
+				[ 0,  1,  0,  0, -1],
+				[-1, -1,  1,  0,  0],
+				[ 1,  1, -1, -1, -1],
+				[ 1,  0,  0,  1,  1]
+			  ])
 
 
 # print(move([
