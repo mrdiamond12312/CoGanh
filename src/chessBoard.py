@@ -7,6 +7,8 @@ weight = [[1, 1, 3, 1, 1],
 		[1, 7, 4, 7, 1],
 		[1, 1, 3, 1, 1]]
 
+starting_move = []
+
 class Board:
 	def __init__(self, board):
 		self.board = [ [0]*5 for i in range(5)]
@@ -36,12 +38,12 @@ class Board:
 		for i, row in enumerate(self.board):
 			for j, pos in enumerate(row):
 				if pos == 1:
-					print(weight[i][j])
+					# print(weight[i][j])
 					count_me += weight[i][j]
 				elif pos == -1:
-					print("-",weight[i][j])
+					# print("-",weight[i][j])
 					count_player += weight[i][j]
-		print("/")
+		# print("/")
 		return count_me - count_player
 
 	def possibleDest(self, posY, posX):
@@ -148,20 +150,21 @@ class Board:
 
 
 
-def minimax(board, depth, alpha, beta, maximizingplayer):
+def minimax(board, depth, alpha, beta, maximize, player):
 	if depth == 0 or board.gameover() : return None, board.eval()
-	moves = board.getAvailableMoves(maximizingplayer)
+	moves = board.getAvailableMoves(player)
 	# for i in moves:
 	# 	print(i)
 	# best_move = random.choice(moves)
 	
-	if maximizingplayer == 1 :
+	if maximize:
 		max_eval = -infinity
+		best_move = None
 		for move in moves:
-			print("/",move,"/")
+			# print("/",move,"/")
 			newboard = board
 			newboard = newboard.makeMove(move[0],move[1])
-			current_eval = minimax(newboard, depth - 1, alpha, beta, -1)[1]
+			current_eval = minimax(newboard, depth - 1, alpha, beta, False, -player)[1]
 			if current_eval > max_eval:
 				max_eval = current_eval
 				best_move = move
@@ -169,15 +172,16 @@ def minimax(board, depth, alpha, beta, maximizingplayer):
 			# if beta <= alpha:
 			# 	print("break")
 			# 	break
-		print(best_move, max_eval)
+		# print(best_move, max_eval)
 		return best_move, max_eval
 	else:
 		min_eval = infinity
+		best_move = None
 		for move in moves:
-			print("/",move,"/")
+			# print("/",move,"/")
 			newboard = board
 			newboard = newboard.makeMove(move[0],move[1])
-			current_eval = minimax(newboard, depth - 1, alpha, beta, 1)[1]
+			current_eval = minimax(newboard, depth - 1, alpha, beta, True, -player)[1]
 			if current_eval <  min_eval :
 				min_eval = current_eval
 				best_move = move
@@ -185,12 +189,16 @@ def minimax(board, depth, alpha, beta, maximizingplayer):
 			# if beta <= alpha:
 			# 		print("break")
 			# 		break
-		print(best_move, min_eval)
+		# print(best_move, min_eval)
 		return best_move, min_eval
+
 def move(prev_board, board, player, remain_time_x, remain_time_o):
-	pre_board = Board(prev_board)
+	if prev_board is None:
+		pre_board = [[]]
+	if prev_board:
+		pre_board = Board(prev_board)
 	cur_board = Board(board)
-	return minimax(cur_board, 3, infinity, -infinity, 1)[0]
+	return minimax(cur_board, 3, infinity, -infinity, True, player)[0]
 	
 testboard1 = Board([
 				[ 1,  0, -1,  0, -1],
@@ -200,6 +208,13 @@ testboard1 = Board([
 				[ 1,  0,  0,  1,  1]
 			  ])
 
+print(move(None, [[1, 1, 1, 1, 1],
+				 [1, 0, 0, 0, 1],
+				 [1, 0, 0, 0, -1],
+				 [-1, 0, 0, 0, -1],
+				 [-1, -1, -1, -1, -1]]
+, -1, 0, 0)
+)
 
 # print(move([
 # 			[ 1,  0, 0,  -1, -1],
@@ -216,8 +231,8 @@ testboard1 = Board([
 #  			[ 1,  0,  0,  1,  1]
 #  			]
 # 			,1,9,9))
-print(testboard1)
-print(testboard1.makeMove((1,1), (1,2)))
+# print(testboard1)
+# print(testboard1.makeMove((1,1), (1,2)))
 
 # testboard1 = Board([
 # 				[ 1,  0, -1,  0, -1],
