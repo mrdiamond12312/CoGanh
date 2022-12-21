@@ -307,14 +307,14 @@ def getMovablePositionList(board, pos, trapPos=None):
     return movablePosList
 
 
-def eval(board):
+def eval(board, player):
     count_me = 0
     count_player = 0
     for i, row in enumerate(board):
         for j, pos in enumerate(row):
-            if pos == 1:
+            if pos == player:
                 count_me += 100 + weight[i][j]
-            elif pos == -1:
+            elif pos == -player:
                 count_player += 100 + weight[i][j]
     return count_me - count_player
 
@@ -362,12 +362,12 @@ def move(prev_board, board, player, remain_time_x, remain_time_o):
                 trap = fromPos
     # bestMove = minimax(board, trap, 3, player, -inf, inf)[1]
     # return ((4 - bestMove[0][0], bestMove[0][1]), (4 - bestMove[1][0], bestMove[1][1]))
-    return tuple(minimax(board, trap, 3, True, player, -inf, inf)[1])
+    return tuple(minimax(board, trap, 3, player, True, -inf, inf)[1])
 
 
 def minimax(board, trap, depth, player, maximizing, alpha, beta):
     if depth == 0 or isFinished(board):
-        return eval(board), None
+        return eval(board, player), None
     if maximizing:
         bestVal = -inf
         pieceList = getMovableChessList(board, player, trap)
@@ -376,7 +376,7 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta):
             for move in getMovablePositionList(board, piece, trap):
                 moves.append([piece, move])
         if not moves:
-            return eval(board), None
+            return eval(board, player), None
         else:
             for move in moves:
                 newBoard = copy.deepcopy(board)
@@ -400,7 +400,7 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta):
             for move in getMovablePositionList(board, piece, trap):
                 moves.append([piece, move])
         if not moves:
-            return eval(board), None
+            return eval(board, player), None
         else:
             for move in moves:
                 newBoard = copy.deepcopy(board)
@@ -416,3 +416,5 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta):
                 if (beta <= alpha):
                     break
             return bestVal, move
+
+print (move(None, initialBoard, -1, 30, 30))
