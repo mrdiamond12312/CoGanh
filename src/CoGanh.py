@@ -328,7 +328,9 @@ def move(prev_board, board, player, remain_time_x, remain_time_o):
 
 def minimax(board, trap, depth, player, maximizing, alpha, beta, maxdepth):
     if isFinished(board):
-        return (223 - (maxdepth - depth))*(-maximizing), None
+        if calculateF(board) == 16:
+            return 223 - (maxdepth - depth), None
+        else: return -223 + (maxdepth - depth), None
     if depth == 0:
         return eval(board, 1), None
     if maximizing:
@@ -379,3 +381,4 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta, maxdepth):
                 if (beta <= alpha):
                     break
             return bestVal , move
+
