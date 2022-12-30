@@ -323,7 +323,7 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta, max_depth):
             for move in getMovablePositionList(board, piece, trap):
                 moves.append([piece, move])
         if not moves:
-            return eval(board, 1) - (max_depth - depth)*2, None
+            return eval(board, player) - (max_depth - depth)*2, None
         else:
             for move in moves:
                 newBoard = copy.deepcopy(board)
@@ -350,7 +350,7 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta, max_depth):
             for move in getMovablePositionList(board, piece, trap):
                 moves.append([piece, move])
         if not moves:
-            return eval(board, 1) - (max_depth - depth)*2, None
+            return eval(board, player) - (max_depth - depth)*2, None
         else:
             for move in moves:
                 newBoard = copy.deepcopy(board)
