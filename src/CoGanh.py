@@ -327,8 +327,10 @@ def move(prev_board, board, player, remain_time_x, remain_time_o):
 
 
 def minimax(board, trap, depth, player, maximizing, alpha, beta, max_depth):
-    if depth == 0 or isFinished(board):
-        return eval(board, player) - maximizing*(max_depth - depth)*2, None
+    if isFinished(board):
+        return inf, None
+    if depth == 0 :
+        return eval(board, 1) - maximizing*(max_depth - depth)*2, None
     if maximizing:
         bestVal = -inf
         pieceList = getMovableChessList(board, player, trap)
@@ -337,7 +339,7 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta, max_depth):
             for move in getMovablePositionList(board, piece, trap):
                 moves.append([piece, move])
         if not moves:
-            return eval(board, player) - (max_depth - depth)*2, None
+            return eval(board, 1) - (max_depth - depth)*2, None
         else:
             for move in moves:
                 newBoard = copy.deepcopy(board)
@@ -361,7 +363,7 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta, max_depth):
             for move in getMovablePositionList(board, piece, trap):
                 moves.append([piece, move])
         if not moves:
-            return eval(board, player) + (max_depth - depth)*2, None
+            return eval(board, 1) + (max_depth - depth)*2, None
         else:
             for move in moves:
                 newBoard = copy.deepcopy(board)
