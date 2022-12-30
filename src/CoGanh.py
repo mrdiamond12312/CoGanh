@@ -88,45 +88,6 @@ for i in range(5):
         boardHelper[i].append(xy)
         symmetricHelper[i].append(symXy)
 
-initialBoard = [
-    [-1, -1, -1, -1, -1],
-    [-1,  0,  0,  0, -1],
-    [1,  0,  0,  0, -1],
-    [1,  0,  0,  0,  1],
-    [1,  1,  1,  1,  1]
-]
-
-testBoard = [
-    [-1, -1, -1, -1, -1],
-    [-1,  0,  0,  0, -1],
-    [1,  0,  0,  0, -1],
-    [1,  0,  0,  0,  1],
-    [1,  1,  1,  1,  1]
-]
-
-trap1 = [
-    [0, 0, 0, 0, 0],
-    [0, 0, -1, 0, 0],
-    [0, 1, 1, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
-
-trap2 = [
-    [0, 0, 0, 0, 0],
-    [0, 0, -1, 0, 0],
-    [0, 1, 0, 1, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
-
-test1 = [[1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [
-    1, 0, 0, 0, -1], [1, 0, 0, 0, -1], [1, -1, -1, -1, -1]]
-
-test2 = [[1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [
-    1, 0, 0, 0, -1], [1, 0, 0, -1, 0], [1, -1, -1, -1, -1]]
-
-
 def checkValidMove(move) -> bool:
     '''Check if we can move from move[0] to move[1]'''
     (fx, fy) = move[0]
@@ -313,9 +274,9 @@ def eval(board, player):
     for i, row in enumerate(board):
         for j, pos in enumerate(row):
             if pos == player:
-                count_me += 20 + weight[i][j]
+                count_me += 10 + weight[i][j]
             elif pos == -player:
-                count_player += 20 + weight[i][j]
+                count_player += 10 + weight[i][j]
     return count_me - count_player
 
 
@@ -367,7 +328,7 @@ def move(prev_board, board, player, remain_time_x, remain_time_o):
 
 def minimax(board, trap, depth, player, maximizing, alpha, beta, max_depth):
     if depth == 0 or isFinished(board):
-        return eval(board, player) - maximizing*(max_depth - depth)*10, None
+        return eval(board, player) - maximizing*(max_depth - depth)*2, None
     if maximizing:
         bestVal = -inf
         pieceList = getMovableChessList(board, player, trap)
@@ -376,7 +337,7 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta, max_depth):
             for move in getMovablePositionList(board, piece, trap):
                 moves.append([piece, move])
         if not moves:
-            return eval(board, player) - (max_depth - depth)*10, None
+            return eval(board, player) - (max_depth - depth)*2, None
         else:
             for move in moves:
                 newBoard = copy.deepcopy(board)
@@ -400,7 +361,7 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta, max_depth):
             for move in getMovablePositionList(board, piece, trap):
                 moves.append([piece, move])
         if not moves:
-            return eval(board, player) + (max_depth - depth)*10, None
+            return eval(board, player) + (max_depth - depth)*2, None
         else:
             for move in moves:
                 newBoard = copy.deepcopy(board)
