@@ -11,6 +11,7 @@ weight = [[1, 1, 3, 1, 1],
 
 starting_move = []
 
+## Some Pre-Calculated for moves
 encodedBoardHelper = [
     [(0, 0), (1, 0), (2, 0), (1, 0), (0, 1)],
     [(1, 3), (4, 0), (3, 0), (4, 0), (1, 1)],
@@ -18,11 +19,13 @@ encodedBoardHelper = [
     [(1, 3), (4, 0), (3, 0), (4, 0), (1, 1)],
     [(0, 3), (1, 2), (2, 2), (1, 2), (0, 2)]
 ]
+
 directValue = [
     (-1, -1), (-1, 0), (-1, 1),
     (0, -1), (0, 0), (0, 1),
     (1, -1), (1, 0), (1, 1)
 ]
+
 boardDirect = [
     [[5, 8, 7], [7, 6, 3], [3, 0, 1], [1, 2, 5]],
     [[5, 7, 3], [7, 3, 1], [3, 1, 5], [1, 5, 7]],
@@ -30,6 +33,7 @@ boardDirect = [
     [[1, 3, 5, 7]],
     [[0, 1, 2, 3, 5, 6, 7, 8]]
 ]
+
 symmetricPoint = [
     [[], [], [], []],
     [[(5, 3)], [(7, 1)], [(3, 5)], [(1, 7)]],
@@ -38,37 +42,11 @@ symmetricPoint = [
     [[(0, 8), (1, 7), (3, 5), (2, 6)]]
 ]
 
-decodedBoardHelper = [[[(0, 1), (1, 1), (1, 0)],
-                       [(0, 2), (1, 1), (0, 0)],
-                       [(0, 3), (1, 2), (0, 1), (1, 3), (1, 1)],
-                       [(0, 4), (1, 3), (0, 2)],
-                       [(1, 4), (1, 3), (0, 3)]],
-                      [[(0, 0), (1, 1), (2, 0)],
-                       [(0, 0), (0, 1), (0, 2), (1, 0),
-                        (1, 2), (2, 0), (2, 1), (2, 2)],
-                       [(0, 2), (1, 1), (1, 3), (2, 2)],
-                       [(0, 2), (0, 3), (0, 4), (1, 2),
-                        (1, 4), (2, 2), (2, 3), (2, 4)],
-                       [(2, 4), (1, 3), (0, 4)]],
-                      [[(1, 0), (2, 1), (3, 0), (1, 1), (3, 1)],
-                       [(1, 1), (2, 0), (2, 2), (3, 1)],
-                       [(1, 1), (1, 2), (1, 3), (2, 1),
-                        (2, 3), (3, 1), (3, 2), (3, 3)],
-                       [(1, 3), (2, 2), (2, 4), (3, 3)],
-                       [(3, 4), (2, 3), (1, 4), (3, 3), (1, 3)]],
-                      [[(2, 0), (3, 1), (4, 0)],
-                       [(2, 0), (2, 1), (2, 2), (3, 0),
-                        (3, 2), (4, 0), (4, 1), (4, 2)],
-                       [(2, 2), (3, 1), (3, 3), (4, 2)],
-                       [(2, 2), (2, 3), (2, 4), (3, 2),
-                        (3, 4), (4, 2), (4, 3), (4, 4)],
-                       [(4, 4), (3, 3), (2, 4)]],
-                      [[(3, 0), (3, 1), (4, 1)],
-                       [(4, 0), (3, 1), (4, 2)],
-                       [(4, 1), (3, 2), (4, 3), (3, 1), (3, 3)],
-                       [(4, 2), (3, 3), (4, 4)],
-                       [(4, 3), (3, 3), (3, 4)]]]
-
+board = [[ 1,  1,  1,  1,  1],
+         [ 1,  0,  0,  0,  1],
+         [ 1,  0,  0,  0, -1],
+         [-1,  0,  0,  0, -1],
+         [-1, -1, -1, -1, -1]]
 
 boardHelper = []
 '''List of available destinations of a possition'''
@@ -87,45 +65,6 @@ for i in range(5):
         symXy = [[(x[0]+i, x[1]+j) for x in y] for y in symmetrics]
         boardHelper[i].append(xy)
         symmetricHelper[i].append(symXy)
-
-initialBoard = [
-    [-1, -1, -1, -1, -1],
-    [-1,  0,  0,  0, -1],
-    [1,  0,  0,  0, -1],
-    [1,  0,  0,  0,  1],
-    [1,  1,  1,  1,  1]
-]
-
-testBoard = [
-    [-1, -1, -1, -1, -1],
-    [-1,  0,  0,  0, -1],
-    [1,  0,  0,  0, -1],
-    [1,  0,  0,  0,  1],
-    [1,  1,  1,  1,  1]
-]
-
-trap1 = [
-    [0, 0, 0, 0, 0],
-    [0, 0, -1, 0, 0],
-    [0, 1, 1, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
-
-trap2 = [
-    [0, 0, 0, 0, 0],
-    [0, 0, -1, 0, 0],
-    [0, 1, 0, 1, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
-
-test1 = [[1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [
-    1, 0, 0, 0, -1], [1, 0, 0, 0, -1], [1, -1, -1, -1, -1]]
-
-test2 = [[1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [
-    1, 0, 0, 0, -1], [1, 0, 0, -1, 0], [1, -1, -1, -1, -1]]
-
 
 def checkValidMove(move) -> bool:
     '''Check if we can move from move[0] to move[1]'''
@@ -188,8 +127,7 @@ def _getUnmoveChessList(board, curChessPlayer, pos, visitted):
         if chessPlayer == 0:
             rt = rt or True
         elif chessPlayer == curChessPlayer:
-            rt = rt or _getUnmoveChessList(board, curChessPlayer,
-                                           helper[i], visitted)
+            rt = rt or _getUnmoveChessList(board, curChessPlayer, helper[i], visitted)
         i += 1
     return rt
 
@@ -313,9 +251,9 @@ def eval(board, player):
     for i, row in enumerate(board):
         for j, pos in enumerate(row):
             if pos == player:
-                count_me += 100 + weight[i][j]
+                count_me += 10 + weight[i][j]
             elif pos == -player:
-                count_player += 100 + weight[i][j]
+                count_player += 10 + weight[i][j]
     return count_me - count_player
 
 
@@ -362,21 +300,30 @@ def move(prev_board, board, player, remain_time_x, remain_time_o):
                 trap = fromPos
     # bestMove = minimax(board, trap, 3, player, -inf, inf)[1]
     # return ((4 - bestMove[0][0], bestMove[0][1]), (4 - bestMove[1][0], bestMove[1][1]))
-    return tuple(minimax(board, trap, 3, player, True, -inf, inf)[1])
+    try:
+        return tuple(minimax(board, trap, 3, player, True, -inf, inf, 3)[1])
+    except:
+        return (None)
+    # if res is None:
+    #     return (None)
+    # return tuple(res)
 
 
-def minimax(board, trap, depth, player, maximizing, alpha, beta):
-    if depth == 0 or isFinished(board):
-        return eval(board, player), None
-    if maximizing:
+def minimax(board, trap, depth, player, maximizing, alpha, beta, max_depth):
+    if isFinished(board):
+        return 227 - (max_depth - depth)*2, None
+    if depth == 0 :
+        return eval(board, player) - (max_depth - depth)*2, None
+    if not maximizing:
         bestVal = -inf
+        bestMove = None
         pieceList = getMovableChessList(board, player, trap)
         moves = []
         for piece in pieceList:
             for move in getMovablePositionList(board, piece, trap):
                 moves.append([piece, move])
         if not moves:
-            return eval(board, player), None
+            return eval(board, 1) - (max_depth - depth)*2, None
         else:
             for move in moves:
                 newBoard = copy.deepcopy(board)
@@ -386,21 +333,24 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta):
                 if not isEaten:
                     if (isTrapChess(newBoard, move[0], move[1])):
                         trap = move[0]
-                value = minimax(newBoard, trap, depth - 1, -player, False, alpha, beta)[0]
+                value = minimax(newBoard, trap, depth - 1, -player, False, alpha, beta, max_depth)[0]
                 bestVal = max(bestVal, value)
+                if bestVal == value:
+                    bestMove = move
                 alpha = max(alpha, bestVal)
                 if (beta <= alpha):
                     break
-            return bestVal, move
+            return bestVal, bestMove
     else:
         bestVal = inf
+        bestMove = None
         pieceList = getMovableChessList(board, player, trap)
         moves = []
         for piece in pieceList:
             for move in getMovablePositionList(board, piece, trap):
                 moves.append([piece, move])
         if not moves:
-            return eval(board, player), None
+            return eval(board, 1) - (max_depth - depth)*2, None
         else:
             for move in moves:
                 newBoard = copy.deepcopy(board)
@@ -410,11 +360,11 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta):
                 if not isEaten:
                     if (isTrapChess(newBoard, move[0], move[1])):
                         trap = move[0]
-                value = minimax(newBoard, trap, depth - 1, -player, True, alpha, beta)[0]
+                value = minimax(newBoard, trap, depth - 1, -player, True, alpha, beta, max_depth)[0]
                 bestVal = min(bestVal, value)
+                if bestVal == value:
+                    bestMove = move
                 beta = min(beta, bestVal)
                 if (beta <= alpha):
                     break
-            return bestVal, move
-
-print (move(None, initialBoard, -1, 30, 30))
+            return bestVal , bestMove
