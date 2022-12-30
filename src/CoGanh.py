@@ -323,11 +323,13 @@ def move(prev_board, board, player, remain_time_x, remain_time_o):
                 trap = fromPos
     # bestMove = minimax(board, trap, 3, player, -inf, inf)[1]
     # return ((4 - bestMove[0][0], bestMove[0][1]), (4 - bestMove[1][0], bestMove[1][1]))
-    return tuple(minimax(board, trap, 3, player, True, -inf, inf)[1])
+    return tuple(minimax(board, trap, 3, player, True, -inf, inf, 3)[1])
 
 
-def minimax(board, trap, depth, player, maximizing, alpha, beta):
-    if depth == 0 or isFinished(board):
+def minimax(board, trap, depth, player, maximizing, alpha, beta, maxdepth):
+    if isFinished(board):
+        return (223 - (maxdepth - depth))*(-maximizing), None
+    if depth == 0:
         return eval(board, 1), None
     if maximizing:
         bestVal = -inf
@@ -347,7 +349,7 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta):
                 if not isEaten:
                     if (isTrapChess(newBoard, move[0], move[1])):
                         trap = move[0]
-                value = minimax(newBoard, trap, depth - 1, -player, False, alpha, beta)[0]
+                value = minimax(newBoard, trap, depth - 1, -player, False, alpha, beta, maxdepth)[0]
                 bestVal = max(bestVal, value)
                 alpha = max(alpha, bestVal)
                 if (beta <= alpha):
@@ -371,7 +373,7 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta):
                 if not isEaten:
                     if (isTrapChess(newBoard, move[0], move[1])):
                         trap = move[0]
-                value = minimax(newBoard, trap, depth - 1, -player, True, alpha, beta)[0]
+                value = minimax(newBoard, trap, depth - 1, -player, True, alpha, beta, maxdepth)[0]
                 bestVal = min(bestVal, value)
                 beta = min(beta, bestVal)
                 if (beta <= alpha):
