@@ -1,7 +1,7 @@
-import time
+# import time
 from math import inf
 import copy
-import sys
+# import sys
 
 weight = [[1, 1, 3, 1, 1],
           [1, 7, 4, 7, 1],
@@ -370,7 +370,7 @@ def minimax(board, trap, depth, player, maximizing, alpha, beta, max_depth):
                     break
             return bestVal , bestMove
 
-start = time.perf_counter()
+# start = time.perf_counter()
 print(move(None, board, -1, 1, 20))
-end = time.perf_counter()
-print(end - start)
+# end = time.perf_counter()
+# print(end - start)
